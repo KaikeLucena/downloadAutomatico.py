@@ -1,0 +1,28 @@
+import os
+import pandas as pd
+from selenium.webdriver.common.keys import Keys
+from selenium import webdriver
+
+
+
+# Define o caminho do driver do Chrome
+chrome_driver_path = "/caminho/para/o/driver/chromedriver.exe"
+
+# Cria uma instância do ChromeDriver
+driver = webdriver.Chrome(chrome_driver_path)
+
+# Abrir o arquivo LINKS RELATORIOS.xlsx e acessar a célula B1
+df = pd.read_excel('LINKS RELATORIOS.xlsx', usecols="B", skiprows=0, nrows=1)
+link = df.iloc[0][0]
+
+# Abrir o link na barra de URL do navegador
+os.startfile(link)
+
+# Localizar o elemento da aba "Relatórios" e clicar nele
+aba_relatorios = driver.find_element_by_xpath("//button[@id='aba-relatorios']")
+aba_relatorios.click()
+
+# Localizar o elemento da pasta "7.1-B.i" e clicar nele
+pasta_bi = driver.find_element_by_xpath("//a[@id='pasta-bi']")
+pasta_bi.click()
+
