@@ -26,3 +26,36 @@ aba_relatorios.click()
 pasta_bi = driver.find_element_by_xpath("//a[@id='pasta-bi']")
 pasta_bi.click()
 
+#############################3333
+
+import os
+import pandas as pd
+import urllib
+
+from selenium import webdriver
+
+
+# Abrir o arquivo LINKS RELATORIOS.xlsx e acessar a célula B1
+df = pd.read_excel('LINKS RELATORIOS.xlsx', usecols="B", skiprows=0, nrows=1)
+link = df.iloc[0][0]
+
+# Inicializar o webdriver e abrir o link
+driver = webdriver.Chrome()
+driver.get(link)
+
+# Clicar no botão "Relatórios"
+relatorios_btn = driver.find_element_by_xpath("//button[contains(text(),'Relatórios')]")
+relatorios_btn.click()
+
+# Clicar no botão da pasta "7.1-B.i"
+b_i_folder_btn = driver.find_element_by_xpath("//a[contains(text(),'7.1-B.i')]")
+b_i_folder_btn.click()
+
+# Encontrar o link do arquivo dentro da página da pasta
+file_link = driver.find_element_by_xpath("//a[contains(text(),'arquivo.zip')]").get_attribute('href')
+
+# Baixar o arquivo diretamente pelo URL
+urllib.request.urlretrieve(file_link, 'nome_do_arquivo.zip')
+
+# Fechar o navegador
+driver.quit()
