@@ -30,10 +30,35 @@ time.sleep(20)
 campo_email = navegador.find_element("xpath", "//*[@title='Download']").click()
 time.sleep(20)
 
-'sys.exit()'
 
+# Define o caminho para o arquivo que deseja carregar
+caminho_arquivo = 'C:\\Users\Ritmo\Downloads\\7.1___bi_05-05-2023 (4).xlsx'
+
+# Define o nome do arquivo no Google Drive
+nome_arquivo = '7.1___bi_05-05-2023 (4).xlsx'
+
+# Define o ID da pasta no Google Drive onde deseja salvar o arquivo
+id_pasta_destino = '1qCupgnmdC5PXeNuwmDPb002lvs2G6MDP'
+
+# Autentica usando as credenciais de autorização OAuth
+creds = Credentials.from_authorized_user_file('C:\\Users\\Ritmo\Downloads\\integracaopython-385814-48d41960262d.json')
+
+# Cria um objeto da API do Google Drive
+drive_service = build('drive', 'v3', credentials=creds)
+
+# Cria um objeto FileMetadata para o arquivo a ser carregado
+file_metadata = {'name': nome_arquivo, 'parents': [id_pasta_destino]}
+
+# Cria um objeto MediaFileUpload para o arquivo a ser carregado
+media = MediaFileUpload(caminho_arquivo, mimetype='application/vnd.ms-excel')
+
+# Cria um arquivo no Google Drive com os metadados e o conteúdo do arquivo
+arquivo = drive_service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+
+# Imprime o ID do arquivo criado
+print(f'O arquivo {nome_arquivo} foi carregado com sucesso no Google Drive com o ID {arquivo.get("id")}.')
 
 #############333
 Este codigo acessa o site especificado faz o login com as credenciais definidas, da alguns cliques dentro do site e faz o download do arquivo desejado.
- 
- 
+###############
+
