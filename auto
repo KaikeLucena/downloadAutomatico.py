@@ -1,88 +1,39 @@
 import os
+import time
 import pandas as pd
+from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
 
 
+navegador = webdriver.Chrome()
 
-# Define o caminho do driver do Chrome
-chrome_driver_path = "/caminho/para/o/driver/chromedriver.exe"
+navegador.get("https://app.pipefy.com/pipes/302215560/reports_v2/300341226")
 
-# Cria uma instância do ChromeDriver
-driver = webdriver.Chrome(chrome_driver_path)
+time.sleep(7)
 
-# Abrir o arquivo LINKS RELATORIOS.xlsx e acessar a célula B1
-df = pd.read_excel('LINKS RELATORIOS.xlsx', usecols="B", skiprows=0, nrows=1)
-link = df.iloc[0][0]
+campo_email = navegador.find_element(By.NAME, "username").send_keys("kaikelucena76@gmail.com")
+time.sleep(2)
 
-# Abrir o link na barra de URL do navegador
-os.startfile(link)
+campo_email = navegador.find_element(By.NAME, "password").send_keys("44927539")
+time.sleep(2) 
 
-# Localizar o elemento da aba "Relatórios" e clicar nele
-aba_relatorios = driver.find_element_by_xpath("//button[@id='aba-relatorios']")
-aba_relatorios.click()
+campo_email = navegador.find_element(By.NAME, "submit").click()
+time.sleep(20)
 
-# Localizar o elemento da pasta "7.1-B.i" e clicar nele
-pasta_bi = driver.find_element_by_xpath("//a[@id='pasta-bi']")
-pasta_bi.click()
+#time deve ser 15 para que dê tempo de clicar no botão 
+campo_email = navegador.find_element("xpath", "//button[@aria-label='Exportar Relatório']").click()
+time.sleep(20)
 
-#############################3333
+campo_email = navegador.find_element("xpath", "//*[@title='Download']").click()
+time.sleep(20)
 
-import os
-import pandas as pd
-import urllib
-
-from selenium import webdriver
+'sys.exit()'
 
 
-# Abrir o arquivo LINKS RELATORIOS.xlsx e acessar a célula B1
-df = pd.read_excel('LINKS RELATORIOS.xlsx', usecols="B", skiprows=0, nrows=1)
-link = df.iloc[0][0]
-
-# Inicializar o webdriver e abrir o link
-driver = webdriver.Chrome()
-driver.get(link)
-
-# Clicar no botão "Relatórios"
-relatorios_btn = driver.find_element_by_xpath("//button[contains(text(),'Relatórios')]")
-relatorios_btn.click()
-
-# Clicar no botão da pasta "7.1-B.i"
-b_i_folder_btn = driver.find_element_by_xpath("//a[contains(text(),'7.1-B.i')]")
-b_i_folder_btn.click()
-
-# Encontrar o link do arquivo dentro da página da pasta
-file_link = driver.find_element_by_xpath("//a[contains(text(),'arquivo.zip')]").get_attribute('href')
-
-# Baixar o arquivo diretamente pelo URL
-urllib.request.urlretrieve(file_link, 'nome_do_arquivo.zip')
-
-# Fechar o navegador
-driver.quit()
-
-
-
-
- ###############################
-  selenium biblioteca que acessa o navegador e clica em botões.
-  colocar crhome drive na mesma pasta em que o python está instalado.
-  
-  #################################
-  xpath do botao relatorios
-  //*[@id="sub-header-button-item"]/li/button
-  
-  xpath do botao 7.1-Bi
-  //*[@id="pipe_placeholder"]/div[2]/div/div[1]/main/div[2]/div[9]/div/a
-  
-  xpath do botão exportar 
-  //*[@id="pipe_placeholder"]/div[2]/div/div[1]/div[2]/div[1]/div[1]/div[3]/div/div/button/div/div/svg
-  
-  xpath do botão download
-  /html/body/div[13]/div/div[2]/footer/button[2]
-  
-  sempre colocar aspas simples entre os parenteses, pois alguns codigo xpath tem aspas duplas
- ############################### 
- 
- 
+#############333
+Este codigo acessa o site especificado faz o login com as credenciais definidas, da alguns cliques dentro do site e faz o download do arquivo desejado.
  
  
