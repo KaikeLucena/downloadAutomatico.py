@@ -14,10 +14,10 @@ navegador.get("https://app.pipefy.com/pipes/302215560/reports_v2/300341226")
 
 time.sleep(7)
 
-campo_email = navegador.find_element(By.NAME, "username").send_keys("kaikelucena76@gmail.com")
+campo_email = navegador.find_element(By.NAME, "username").send_keys("*")
 time.sleep(2)
 
-campo_email = navegador.find_element(By.NAME, "password").send_keys("44927539")
+campo_email = navegador.find_element(By.NAME, "password").send_keys("*")
 time.sleep(2) 
 
 campo_email = navegador.find_element(By.NAME, "submit").click()
@@ -62,3 +62,36 @@ print(f'O arquivo {nome_arquivo} foi carregado com sucesso no Google Drive com o
 Este codigo acessa o site especificado faz o login com as credenciais definidas, da alguns cliques dentro do site e faz o download do arquivo desejado.
 ###############
 
+
+
+
+
+
+
+
+######################################
+
+Essa parte do código envia o arquivo para o drive, só não sei para qual.
+
+from google.oauth2.credentials import Credentials
+from google.oauth2 import service_account
+from googleapiclient.errors import HttpError
+from googleapiclient.http import MediaFileUpload
+from googleapiclient.discovery import build
+
+# Autenticação
+creds = None
+SCOPES = ['https://www.googleapis.com/auth/drive']
+
+# Substitua o nome do arquivo JSON e o caminho abaixo pelo seu arquivo
+creds = service_account.Credentials.from_service_account_file(
+    'C:\\Users\\Ritmo\\Documents\\chave\\idyllic-orbit-385818-0632eed8b2c7.json', scopes=SCOPES)
+
+# Criar um objeto MediaFileUpload com o arquivo que deseja enviar
+file_path = 'C:\\Users\\Ritmo\\Documents\\meuarquivo.txt'
+file_metadata = {'name': 'meuarquivo.txt'} 
+#file_metadata['parents'] = ['<1_mk5bjo4kWnG11pHw3K6jup-guyAtJav>']
+
+media = MediaFileUpload(file_path, mimetype='text/plain')
+
+###########################################
